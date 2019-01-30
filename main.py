@@ -99,16 +99,15 @@ class Model:
     def return_plot_data(self):
 
         self.plotdata = self.parameters
+        self.plotdata["plot_ci"] = self.intervals["ci"] / 2
 
         if self.parameters["hypothesis"] == "Äquivalenzhypothese":
-            self.plotdata["normvalue"] = self.parameters["normvalue"]
-            self.plotdata["plot_ci"] = self.intervals["ci"] / 2
+            self.plotdata["plot_errorbar_normvalue"] = self.parameters["normvalue"]
             self.plotdata["plot_ci_lower"] = self.intervals["ci_lower"]
             self.plotdata["plot_ci_upper"] = self.intervals["ci_upper"]
 
         elif self.parameters["hypothesis"] == "Regression zur Mitte":
-            self.plotdata["normvalue"] = self.statistics["normvalue_regression"]
-            self.plotdata["plot_ci"] = self.intervals["ci_regression"] / 2
+            self.plotdata["plot_errorbar_normvalue"] = self.statistics["normvalue_regression"]
             self.plotdata["plot_ci_lower"] = self.intervals["ci_lower_regression"]
             self.plotdata["plot_ci_upper"] = self.intervals["ci_upper_regression"]
 
@@ -260,7 +259,7 @@ class Application:
             plt.fill_between(x_normdist, y_normdist,color="C0",alpha=alpha_values[idx],label=region_labels[idx],where=regions[idx])
 
         # plot confidence interval
-        plt.errorbar(x=plotdata["normvalue"],y=0,xerr=plotdata["plot_ci"],fmt=".k",capsize=10)
+        plt.errorbar(x=plotdata["plot_errorbar_normvalue"],y=0,xerr=plotdata["plot_ci"],fmt=".k",capsize=10)
 
         print("Konfidenzintervall",plotdata["plot_ci"])
 
