@@ -195,6 +195,7 @@ class Application:
     def __init__(self, master):
         self.master = master
         self.master.title("Konfidenzintervall-Rechner")
+        self.master.resizable(0,0)
         self.config_system_icon()
 
         self.model = Model()
