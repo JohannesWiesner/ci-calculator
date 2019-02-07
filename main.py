@@ -42,8 +42,6 @@ class Model:
             "ci_regression": None,
             })
 
-        self.plotdata = dict()
-
     def set_parameter_values(self, value_list):
         keys = self.parameters.keys()
         self.parameters.update(zip(keys, value_list))
@@ -98,20 +96,20 @@ class Model:
 
     def return_plot_data(self):
 
-        self.plotdata = self.parameters
-        self.plotdata["plot_ci"] = self.intervals["ci"] / 2
+        plotdata = self.parameters
+        plotdata["plot_ci"] = self.intervals["ci"] / 2
 
         if self.parameters["hypothesis"] == "Äquivalenzhypothese":
-            self.plotdata["plot_errorbar_normvalue"] = self.parameters["normvalue"]
-            self.plotdata["plot_ci_lower"] = self.intervals["ci_lower"]
-            self.plotdata["plot_ci_upper"] = self.intervals["ci_upper"]
+            plotdata["plot_errorbar_normvalue"] = self.parameters["normvalue"]
+            plotdata["plot_ci_lower"] = self.intervals["ci_lower"]
+            plotdata["plot_ci_upper"] = self.intervals["ci_upper"]
 
         elif self.parameters["hypothesis"] == "Regression zur Mitte":
-            self.plotdata["plot_errorbar_normvalue"] = self.statistics["normvalue_regression"]
-            self.plotdata["plot_ci_lower"] = self.intervals["ci_lower_regression"]
-            self.plotdata["plot_ci_upper"] = self.intervals["ci_upper_regression"]
+            plotdata["plot_errorbar_normvalue"] = self.statistics["normvalue_regression"]
+            plotdata["plot_ci_lower"] = self.intervals["ci_lower_regression"]
+            plotdata["plot_ci_upper"] = self.intervals["ci_upper_regression"]
 
-        return self.plotdata
+        return plotdata
 
 class ParameterFormular(tk.Frame):
     def __init__(self,master):
