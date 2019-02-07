@@ -126,6 +126,7 @@ class ParameterFormular(tk.Frame):
         ]
 
         self.input_vars = list()
+
         self.create(self.parameterlist)
 
     def create(self,parameterlist):
@@ -135,30 +136,30 @@ class ParameterFormular(tk.Frame):
             label = ttk.Label(self,text=text)
             label.grid(row=idx,column=0,sticky="W")
 
+            var = tk.StringVar(self.master)
+
             if text == "Reliabilitätskoeffizient":
-                var = tk.DoubleVar(self.master)
+                var.trace("w",self.validate_unit_interval_input)
                 element = ttk.Entry(self,justify="right",textvariable=var)
 
             elif text == "Sicherheitswahrscheinlichkeit":
-                var = tk.StringVar(self.master)
                 var.set("95%")
                 element = ttk.Combobox(self,textvariable=var,values=["99%","95%","90%","80%"])
 
             elif text == "Fragestellung":
-                var = tk.StringVar(self.master)
                 var.set("einseitig")
                 element = ParameterFormular.create_radiobuttons(self,var,buttonlist=["einseitig","zweiseitig"])
 
             elif text == "Hypothese":
-                var = tk.StringVar(self.master)
                 var.set("Äquivalenzhypothese")
                 element = ParameterFormular.create_radiobuttons(self,var,buttonlist=["Äquivalenzhypothese","Regression zur Mitte"])
 
             else:
-                var = tk.IntVar(self.master)
+                var.trace("w",self.validate_float_input)
                 element = ttk.Entry(self,justify="right",textvariable=var)
             
             self.input_vars.append(var)
+
             element.grid(row=idx,column=1,sticky="EW")
 
     @staticmethod
@@ -178,8 +179,38 @@ class ParameterFormular(tk.Frame):
 
         return frame
 
+    def validate_unit_interval_input(self,name,index,mode):
+        # allow a number between 0 and 1 or an empty string
+        regex = re.compile(r'^0(\.[0-9]*)?$|^1(\.0?)?$|^$')
+
+        for var in self.input_vars:
+            if name == str(var):
+                if not regex.match(var.get()):
+                    var.set(var.get()[:-1])
+                    self.master.bell()
+
+    def validate_float_input(self,name,index,mode):
+        # allow only floating point numbers or an empty string
+        regex = re.compile(r'^[+-]?((\d+\.?\d*)|(\.\d+))$|^$')
+
+        for var in self.input_vars:
+            if name == str(var):
+                if not regex.match(var.get()):
+                    var.set(var.get()[:-1])
+                    self.master.bell()
+
     def get_input_values(self):
-        return [var.get() for var in self.input_vars]
+        output_list = [
+        float(self.input_vars[0].get()),
+        float(self.input_vars[1].get()),
+        float(self.input_vars[2].get()),
+        float(self.input_vars[3].get()),
+        self.input_vars[4].get(),
+        self.input_vars[5].get(),
+        self.input_vars[6].get()
+        ]
+
+        return output_list
 
 class Navbar(tk.Frame):
     def __init__(self,master):
