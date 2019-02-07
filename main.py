@@ -296,17 +296,23 @@ class Application:
         plt.xlabel(xlabel="Normwert")
         plt.ylabel(ylabel=r'$\phi_{\mu\sigma}(\mathcal{X})$')
 
-        # set plot title
-        title = "Normwert: {} Reliabilität: {} Mittelwert: {} Standardabweichung: {} Untere KI-Grenze: {} Obere KI-Grenze: {}".format(
-        plotdata["normvalue"],
-        plotdata["reliability"],
-        plotdata["mean"],
-        plotdata["sd"],
-        round(plotdata["plot_ci_lower"],2),
-        round(plotdata["plot_ci_upper"],2)
-        )
+        # create textbox
+        textbox_strings = [
+        "Normwert: {}".format(plotdata["normvalue"]),
+        "Untere KI-Grenze: {}".format(round(plotdata["plot_ci_lower"],2)),
+        "Obere KI-Grenze: {}".format(round(plotdata["plot_ci_upper"],2)),
+        "Reliabilität: {}".format(plotdata["reliability"]),
+        "Mittelwert: {}".format(plotdata["mean"]),
+        "Standardabweichung: {}".format(plotdata["sd"])
+        ]
+        
+        sep = '\n'
+        textbox_content = sep.join(textbox_strings)
 
-        plt.title(label=title,loc="left")
+        textbox_props = dict(boxstyle='round',facecolor=None,alpha=0.5)
+
+        # place a text box in upper left in axes coords
+        plt.text(0.01, 0.98,textbox_content,fontsize=8,transform = plt.gca().transAxes,verticalalignment='top',bbox=textbox_props)
 
         # create legend
         plt.legend(loc='upper right', prop={'size': 8})
