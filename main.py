@@ -89,12 +89,12 @@ class Model:
         self.intervals["ci"] = self.intervals["ci_upper"] - self.intervals["ci_lower"]
         self.intervals["ci_regression"] = self.intervals["ci_upper_regression"] - self.intervals["ci_lower_regression"]
     
-    def run_model(self):
+    def run(self):
         self.set_z_value()
         self.calculate_statistics()
         self.calculate_confidence_intervals()
 
-    def return_plot_data(self):
+    def get_plot_data(self):
 
         plotdata = self.parameters
         plotdata["plot_ci"] = self.intervals["ci"] / 2
@@ -147,12 +147,12 @@ class ParameterFormular(tk.Frame):
             elif text == "Fragestellung":
                 var = tk.StringVar(self.master)
                 var.set("einseitig")
-                element = ParameterFormular.createRadiobuttons(self,var,buttonlist=["einseitig","zweiseitig"])
+                element = ParameterFormular.create_radiobuttons(self,var,buttonlist=["einseitig","zweiseitig"])
 
             elif text == "Hypothese":
                 var = tk.StringVar(self.master)
                 var.set("Äquivalenzhypothese")
-                element = ParameterFormular.createRadiobuttons(self,var,buttonlist=["Äquivalenzhypothese","Regression zur Mitte"])
+                element = ParameterFormular.create_radiobuttons(self,var,buttonlist=["Äquivalenzhypothese","Regression zur Mitte"])
 
             else:
                 var = tk.IntVar(self.master)
@@ -162,7 +162,7 @@ class ParameterFormular(tk.Frame):
             element.grid(row=idx,column=1,sticky="EW")
 
     @staticmethod
-    def createRadiobuttons(parent,textvariable,buttonlist):
+    def create_radiobuttons(parent,textvariable,buttonlist):
         frame = tk.Frame(parent)
 
         for text in buttonlist:
@@ -209,7 +209,7 @@ class Application:
 
     def update_model(self):
         self.model.set_parameter_values(self.parameter_formular.get_input_values())
-        self.model.run_model()
+        self.model.run()
 
     # FIXME: following an object-oriented approach I originally wanted the plot window to also be a class but I didn't know how to do that
     def callPlotWindow(self,plotdata):
@@ -288,7 +288,7 @@ class Application:
 
     def perform_button_action(self):
         self.update_model()
-        self.callPlotWindow(self.model.return_plot_data())
+        self.callPlotWindow(self.model.get_plot_data())
 
     def config_system_icon(self):
         # application icon (iconbitmap-method doesn't work on linux)
