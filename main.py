@@ -4,13 +4,9 @@ from tkinter import ttk
 from collections import OrderedDict
 import re
 import math
-
-# TODO check wich modules are used in the end
 import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 import numpy as np
 from scipy.stats import norm
-from scipy.stats import zscore
 
 class Model:
 
