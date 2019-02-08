@@ -2,6 +2,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import font
 from collections import OrderedDict
 import re
 import math
@@ -128,16 +129,19 @@ class ParameterFormular(tk.Frame):
 
     def create(self,parameterlist):
 
+        space = ttk.Frame(self)
+        space.grid(row=0,column=1,padx=10)
+
         for idx,text in enumerate(parameterlist):
 
-            label = ttk.Label(self,text=text)
+            label = ttk.Label(self,text=text,background='#ffffff')
             label.grid(row=idx,column=0,sticky="W")
 
             var = tk.StringVar(self.master)
 
             if text == "Reliabilitätskoeffizient":
                 var.trace("w",self.validate_unit_interval_input)
-                element = ttk.Entry(self,justify="right",textvariable=var)
+                element = ttk.Entry(self,justify="left",textvariable=var)
 
             elif text == "Sicherheitswahrscheinlichkeit":
                 var.set("95%")
@@ -153,15 +157,19 @@ class ParameterFormular(tk.Frame):
 
             else:
                 var.trace("w",self.validate_float_input)
-                element = ttk.Entry(self,justify="right",textvariable=var)
+                element = ttk.Entry(self,justify="left",textvariable=var)
             
             self.input_vars.append(var)
 
-            element.grid(row=idx,column=1,sticky="EW")
+            element.grid(row=idx,column=2,sticky="EW")
 
     @staticmethod
     def create_radiobuttons(parent,textvariable,buttonlist):
         frame = tk.Frame(parent)
+
+        # background keyword argument seems not to exist for ttk.Radiobutton
+        s = ttk.Style()
+        s.configure('White.TRadiobutton',background='#ffffff')
 
         for text in buttonlist:
 
@@ -170,6 +178,7 @@ class ParameterFormular(tk.Frame):
                 text=text,
                 value=text,
                 variable=textvariable,
+                style='White.TRadiobutton'
             )
 
             radiobutton.pack(anchor="w")
@@ -223,7 +232,7 @@ class Navbar(tk.Frame):
         tk.Frame.__init__(self,master)
 
         self.plot_button = ttk.Button(self,text="Plotten")
-        self.plot_button.grid(row=0,column=0,sticky="W")
+        self.plot_button.pack()
 
 class Application:
     def __init__(self, master):
@@ -238,11 +247,11 @@ class Application:
     def build_view(self):
 
         self.parameter_formular = ParameterFormular(self.master)
-        self.parameter_formular.pack(side="top",fill="x")
+        self.parameter_formular.pack(side="top",fill="x",padx=5,pady=5)
 
         self.navbar = Navbar(self.master)
         self.navbar.plot_button.configure(command=self.perform_button_action)
-        self.navbar.pack(side="bottom",fill="x")
+        self.navbar.pack(side="left",fill="x",padx=5,pady=5)
 
     def update_model(self):
         self.model.set_parameter_values(self.parameter_formular.get_input_values())
@@ -341,10 +350,19 @@ class Application:
         # application icon (iconbitmap-method doesn't work on linux)
         if sys.platform == "win32":
             tk.Tk.iconbitmap(self.master, "app_icon.ico")
+            
         elif sys.platform == "linux":
             pass
 
 if __name__ == "__main__":
     root = tk.Tk()
+
+    # change default color
+    root.tk_setPalette(background='#ffffff')
+    # change default font settings
+    default_font = font.nametofont("TkDefaultFont")
+    default_font.configure(size=10)
+    root.option_add("*Font", default_font)
+
     my_gui = Application(root)
     root.mainloop()
