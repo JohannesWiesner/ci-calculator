@@ -1,6 +1,7 @@
 import sys
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from collections import OrderedDict
 import re
 import math
@@ -140,7 +141,7 @@ class ParameterFormular(tk.Frame):
 
             elif text == "Sicherheitswahrscheinlichkeit":
                 var.set("95%")
-                element = ttk.Combobox(self,textvariable=var,values=["99%","95%","90%","80%"])
+                element = ttk.Combobox(self,textvariable=var,state="readonly",values=["99%","95%","90%","80%"])
 
             elif text == "Fragestellung":
                 var.set("einseitig")
@@ -194,6 +195,15 @@ class ParameterFormular(tk.Frame):
                 if not regex.match(var.get()):
                     var.set(var.get()[:-1])
                     self.master.bell()
+
+    def check_for_input(self):
+        input_check = True
+        
+        for var in self.input_vars:
+            if not var.get():
+                input_check = False
+        
+        return input_check
 
     def get_input_values(self):
         output_list = [
@@ -286,8 +296,6 @@ class Application:
         # plot confidence interval
         plt.errorbar(x=plotdata["plot_errorbar_normvalue"],y=0,xerr=plotdata["plot_ci"],fmt=".k",capsize=10)
 
-        print("Konfidenzintervall",plotdata["plot_ci"])
-
         # set x and y axis title
         plt.xlabel(xlabel="Normwert")
         plt.ylabel(ylabel=r'$\phi_{\mu\sigma}(\mathcal{X})$')
@@ -320,8 +328,14 @@ class Application:
         window_manager.canvas.set_window_title('Konfidenzintervall-Rechner')
 
     def perform_button_action(self):
-        self.update_model()
-        self.callPlotWindow(self.model.get_plot_data())
+        input_check = self.parameter_formular.check_for_input()
+
+        if input_check:
+            self.update_model()
+            self.callPlotWindow(self.model.get_plot_data())
+        else:
+            messagebox.showerror("Konfidenzintervall-Rechner","Bitte fülle alle Eingabefelder aus")
+
 
     def config_system_icon(self):
         # application icon (iconbitmap-method doesn't work on linux)
