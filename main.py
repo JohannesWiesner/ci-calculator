@@ -322,7 +322,7 @@ class Application:
         sep = '\n'
         textbox_content = sep.join(textbox_strings)
 
-        textbox_props = dict(boxstyle='round',facecolor=None,alpha=0.5)
+        textbox_props = dict(boxstyle='round',facecolor='white',alpha=0.5)
 
         # place a text box in upper left in axes coords
         plt.text(0.01, 0.98,textbox_content,fontsize=8,transform = plt.gca().transAxes,verticalalignment='top',bbox=textbox_props)
