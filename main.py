@@ -116,10 +116,10 @@ class ParameterFormular(tk.Frame):
         self.parameterlist = [
         "Reliabilitätskoeffizient",
         "Standardabweichung des Normwertes",
-        "Mittelwert des Normwertes",
-        "Normwert",
+        "Normmittelwert",
+        "Individueller Normwert",
         "Sicherheitswahrscheinlichkeit",
-        "Fragestellung",
+        "Seitigkeit",
         "Hypothese"
         ]
 
@@ -147,7 +147,7 @@ class ParameterFormular(tk.Frame):
                 var.set("95%")
                 element = ttk.Combobox(self,textvariable=var,state="readonly",values=["99%","95%","90%","80%"])
 
-            elif text == "Fragestellung":
+            elif text == "Seitigkeit":
                 var.set("einseitig")
                 element = ParameterFormular.create_radiobuttons(self,var,buttonlist=["einseitig","zweiseitig"])
 
@@ -305,17 +305,19 @@ class Application:
         # plot confidence interval
         plt.errorbar(x=plotdata["plot_errorbar_normvalue"],y=0,xerr=plotdata["plot_ci"],fmt=".k",capsize=10)
 
-        # set x and y axis title
+        # set x-axis title
         plt.xlabel(xlabel="Normwert")
-        plt.ylabel(ylabel=r'$\phi_{\mu\sigma}(\mathcal{X})$')
+
+        # don't show y-axis ticks and title
+        plt.gca().axes.get_yaxis().set_visible(False)
 
         # create textbox
         textbox_strings = [
-        "Normwert: {}".format(plotdata["normvalue"]),
+        "Individueller Normwert: {}".format(plotdata["normvalue"]),
         "Untere KI-Grenze: {}".format(round(plotdata["plot_ci_lower"],2)),
         "Obere KI-Grenze: {}".format(round(plotdata["plot_ci_upper"],2)),
         "Reliabilität: {}".format(plotdata["reliability"]),
-        "Mittelwert: {}".format(plotdata["mean"]),
+        "Normmittelwert: {}".format(plotdata["mean"]),
         "Standardabweichung: {}".format(plotdata["sd"])
         ]
         
