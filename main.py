@@ -258,7 +258,7 @@ class Application:
         self.model.run()
 
     # FIXME: following an object-oriented approach I originally wanted the plot window to also be a class but I didn't know how to do that
-    def callPlotWindow(self,plotdata):
+    def call_plot_window(self,plotdata):
 
         # turn on interactive mode
         plt.ion()
@@ -343,7 +343,7 @@ class Application:
 
         if input_check:
             self.update_model()
-            self.callPlotWindow(self.model.get_plot_data())
+            self.call_plot_window(self.model.get_plot_data())
         else:
             messagebox.showerror("Konfidenzintervall-Rechner","Bitte fülle alle Eingabefelder aus")
 
