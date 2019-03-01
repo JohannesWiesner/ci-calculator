@@ -11,3 +11,7 @@ To do the calculation the following additional information has to be added by th
 - confidence level (user can choose between the following confidence levels: 99%, 95%, 90%, 80%)
 - test type (one-sided or two-sided)
 - hypothesis (equivalence hypothesis or regression towards the mean hypothesis)
+## Create a standalone application using cx_Freeze
+This repository includes the distutils setup script setup.py. After installing cx_Freeze you can create a standalone application using cx_Freeze and the provided setup.py script. Please note that cx_Freeze tends to produce quite large standalone applications and that the behavior of the setup.py script tends to be unclear sometimes. With the current setup.py script the application is around 200 MB big on my machine. Any help to reduce the size of the application is greatly appreciated.
+
+For further information see [cx_Freeze documentation](https://cx-freeze.readthedocs.io/en/latest/)
