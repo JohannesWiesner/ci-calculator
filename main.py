@@ -306,7 +306,7 @@ class Application:
         plt.errorbar(x=plotdata["plot_errorbar_normvalue"],y=0,xerr=plotdata["plot_ci"],fmt=".k",capsize=10)
 
         # set x-axis title
-        plt.xlabel(xlabel="Normwert")
+        plt.xlabel(xlabel="Skala der Normwerte")
 
         # don't show y-axis ticks and title
         plt.gca().axes.get_yaxis().set_visible(False)
