@@ -311,7 +311,7 @@ class Application:
         # don't show y-axis ticks and title
         plt.gca().axes.get_yaxis().set_visible(False)
 
-        # create textbox
+        # create textbox and place it in upper left corner
         textbox_strings = [
         "Individueller Normwert: {}".format(plotdata["normvalue"]),
         "Untere KI-Grenze: {}".format(round(plotdata["plot_ci_lower"],2)),
@@ -329,11 +329,14 @@ class Application:
 
         textbox_props = dict(boxstyle='round',facecolor='white',alpha=0.5)
 
-        # place a text box in upper left in axes coords
         plt.text(0.01, 0.98,textbox_content,fontsize=8,transform = plt.gca().transAxes,verticalalignment='top',bbox=textbox_props)
 
         # create legend
         plt.legend(loc='upper right', prop={'size': 8})
+
+        # create a vertical line labeled with 'mean'
+        plt.vlines(plotdata["mean"],ymin=0,ymax=norm.pdf(plotdata["mean"],plotdata["mean"],plotdata["sd"]),color="C0")
+        plt.text(plotdata["mean"] + 0.01 * plotdata["sd"],norm.pdf(plotdata["mean"],plotdata["mean"],plotdata["sd"]) / 2,'Mittelwert',rotation=90,alpha=0.5)
 
         # change window icon and title
         # TODO: Make sure these methods also work under linux and MAC OS
