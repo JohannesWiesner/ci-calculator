@@ -318,7 +318,10 @@ class Application:
         "Obere KI-Grenze: {}".format(round(plotdata["plot_ci_upper"],2)),
         "Reliabilität: {}".format(plotdata["reliability"]),
         "Normmittelwert: {}".format(plotdata["mean"]),
-        "Standardabweichung: {}".format(plotdata["sd"])
+        "Standardabweichung: {}".format(plotdata["sd"]),
+        "Sicherheitswahrscheinlichkeit: {}".format(plotdata["confidence_level"]),
+        "Seitigkeit: {}".format(plotdata["question"]),
+        "Hypothese: {}".format(plotdata["hypothesis"])
         ]
         
         sep = '\n'
