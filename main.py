@@ -308,6 +308,19 @@ class Application:
         # set x-axis title
         plt.xlabel(xlabel="Skala der Normwerte")
 
+        # set x-axis ticks (force x-axis to always be in units of SD)
+        x_ticks = np.array([
+            plotdata["mean"] - 3 * plotdata["sd"], 
+            plotdata["mean"] - 2 * plotdata["sd"],
+            plotdata["mean"] - 1 * plotdata["sd"],
+            plotdata["mean"],
+            plotdata["mean"] + 1 * plotdata["sd"], 
+            plotdata["mean"] + 2 * plotdata["sd"],
+            plotdata["mean"] + 3 * plotdata["sd"]
+            ])
+
+        plt.xticks(x_ticks)
+
         # don't show y-axis ticks and title
         plt.gca().axes.get_yaxis().set_visible(False)
 
