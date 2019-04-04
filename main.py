@@ -302,6 +302,10 @@ class Application:
         for idx,region in enumerate(regions):
             plt.fill_between(x_normdist, y_normdist,color="C0",alpha=alpha_values[idx],label=region_labels[idx],where=regions[idx])
 
+        # create a vertical line labeled with 'mean'
+        plt.vlines(plotdata["mean"],ymin=0,ymax=norm.pdf(plotdata["mean"],plotdata["mean"],plotdata["sd"]),color="C0")
+        plt.text(plotdata["mean"] + 0.01 * plotdata["sd"],norm.pdf(plotdata["mean"],plotdata["mean"],plotdata["sd"]) / 2,'Mittelwert',rotation=90,alpha=0.5)
+
         # plot confidence interval
         plt.errorbar(x=plotdata["plot_errorbar_normvalue"],y=0,xerr=plotdata["plot_ci"],fmt=".k",capsize=10)
 
@@ -346,10 +350,6 @@ class Application:
 
         # create legend
         plt.legend(loc='upper right', prop={'size': 8})
-
-        # create a vertical line labeled with 'mean'
-        plt.vlines(plotdata["mean"],ymin=0,ymax=norm.pdf(plotdata["mean"],plotdata["mean"],plotdata["sd"]),color="C0")
-        plt.text(plotdata["mean"] + 0.01 * plotdata["sd"],norm.pdf(plotdata["mean"],plotdata["mean"],plotdata["sd"]) / 2,'Mittelwert',rotation=90,alpha=0.5)
 
         # change window icon and title
         # TODO: Make sure these methods also work under linux and MAC OS
