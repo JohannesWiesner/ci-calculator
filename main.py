@@ -95,17 +95,18 @@ class Model:
     def get_plot_data(self):
 
         plotdata = self.parameters
-        plotdata["plot_ci"] = self.intervals["ci"] / 2
 
         if self.parameters["hypothesis"] == "Äquivalenzhypothese":
             plotdata["plot_errorbar_normvalue"] = self.parameters["normvalue"]
             plotdata["plot_ci_lower"] = self.intervals["ci_lower"]
             plotdata["plot_ci_upper"] = self.intervals["ci_upper"]
+            plotdata["plot_ci"] = self.intervals["ci"] / 2
 
         elif self.parameters["hypothesis"] == "Regression zur Mitte":
             plotdata["plot_errorbar_normvalue"] = self.statistics["normvalue_regression"]
             plotdata["plot_ci_lower"] = self.intervals["ci_lower_regression"]
             plotdata["plot_ci_upper"] = self.intervals["ci_upper_regression"]
+            plotdata["plot_ci"] = self.intervals["ci_regression"] / 2
 
         return plotdata
 
