@@ -376,15 +376,19 @@ class Application:
         elif sys.platform == "linux":
             pass
 
+    @staticmethod 
+    def run():
+        root = tk.Tk()
+
+        # change default color
+        root.tk_setPalette(background='#ffffff')
+        # change default font settings
+        default_font = font.nametofont("TkDefaultFont")
+        default_font.configure(size=10)
+        root.option_add("*Font", default_font)
+
+        my_gui = Application(root)
+        root.mainloop()
+
 if __name__ == "__main__":
-    root = tk.Tk()
-
-    # change default color
-    root.tk_setPalette(background='#ffffff')
-    # change default font settings
-    default_font = font.nametofont("TkDefaultFont")
-    default_font.configure(size=10)
-    root.option_add("*Font", default_font)
-
-    my_gui = Application(root)
-    root.mainloop()
+    Application.run()
