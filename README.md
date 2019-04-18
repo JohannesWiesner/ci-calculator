@@ -1,5 +1,10 @@
 # ci-calculator
-The code is written in Python 3.6.2. The UI language is written in German but the code can be easily adapted to any other language. 
+A GUI software for calculating and plotting confidence intervalls used for pychodiagnostics.
+## How to run this software
+```bash
+pipenv install
+pipenv run python main.py
+```
 ## Problem
 Some psychodiagnostic instruments don't offer confidence intervals for their norm values although the report of confidence intervals should be mandatory when reporting psychodiagnostic test results.
 ## Solution
