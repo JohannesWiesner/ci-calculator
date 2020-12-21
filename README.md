@@ -23,7 +23,7 @@ To do the calculation the following additional information has to be added by th
 ![alt-text](https://github.com/JohannesWiesner/ci-calculator/blob/master/ci_calculator.gif)
 
 ## Tutorial
-This repository includes a `tutorial.pdf` which gives an introduction to confidendence intervals in psychodiagnostics.
+This repository includes a [tutorial.pdf](https://github.com/JohannesWiesner/ci-calculator/blob/master/tutorial.pdf) which gives an introduction to confidendence intervals in psychodiagnostics.
 
 ## Projects
 An online implementation of the ci-calculator in [R-Shiny](https://shiny.rstudio.com/) can be found [here](https://jonasschemmel.shinyapps.io/Konfidenzintervall-Rechner/).
